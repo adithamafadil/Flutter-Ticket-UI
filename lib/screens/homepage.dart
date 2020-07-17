@@ -1,11 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hanship_ui/data/database-helper.dart';
+import 'package:flutter_hanship_ui/models/user.dart';
 import 'package:flutter_hanship_ui/widgets/carousel_promo.dart';
 import 'package:flutter_hanship_ui/widgets/main_menu.dart';
 import 'package:flutter_hanship_ui/widgets/top_destination_widget.dart';
 import 'package:flutter_hanship_ui/widgets/top_screen_widget.dart';
 
-class HomePage extends StatelessWidget {
+import 'account.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  DatabaseHelper db;
+  User _user;
+
+  @override
+  void initState() {
+    super.initState();
+    db = DatabaseHelper();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,19 +50,12 @@ class HomePage extends StatelessWidget {
                           ),
                           child: Builder(
                             builder: (context) => IconButton(
-                              icon: Icon(Icons.person_outline),
-                              color: Colors.white,
-                              onPressed: () {
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Maaf, Fitur Belum Tersedia",
-                                    ),
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                );
-                              },
-                            ),
+                                icon: Icon(Icons.person_outline),
+                                color: Colors.white,
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) => Account()))),
                           ),
                         ),
                         RichText(
@@ -57,7 +68,7 @@ class HomePage extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: "Admin",
+                                text: 'User',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),
